@@ -2,18 +2,27 @@ import styles from '../styles/styles.module.css';
 import noImage from '../assets/no-image.jpg';
 import { useProduct } from '../hooks/useProduct';
 
-export const ProductCard = () => {
-  const {counter, increaseBy} = useProduct(0)  
+interface Product {
+  id: string;
+  title: string;
+  img?: string;
+}
+
+interface ProductCardProps {
+  product: Product;
+}
+
+export const ProductCard = ({ product }: ProductCardProps) => {
+  const { counter, increaseBy } = useProduct(0);
 
   return (
     <div className={styles.productCard}>
       <img
         className={styles.productImg}
-        src="./coffee-mug.png"
+        src={product.img ? product.img : noImage}
         alt="Taza de café!"
       />
-      <img className={styles.productImg} src={noImage} alt="No hay taza!" />
-      <span className={styles.productDescription}>Coffee Mug</span>
+      <span className={styles.productDescription}>{product.title}</span>
       <div className={styles.buttonsContainer}>
         <button className={styles.buttonMinus} onClick={() => increaseBy(-1)}>
           -
