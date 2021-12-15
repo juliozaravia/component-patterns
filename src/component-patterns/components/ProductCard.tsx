@@ -1,61 +1,30 @@
-import styles from '../styles/styles.module.css';
-import noImage from '../assets/no-image.jpg';
+import { createContext } from 'react';
+
 import { useProduct } from '../hooks/useProduct';
+import { ProductCardProps, ProductContextProps } from '../interfaces/interfaces';
 
-interface ProductCardProps {
-  product: Product;
-}
+import styles from '../styles/styles.module.css';
+import { ProductButtons, ProductImage, ProductTitle } from './';
 
-interface ProductButtonsProps {
-  counter: number;
-  increaseBy: (value: number) => void;
-}
+export const productContext = createContext({} as ProductContextProps);
+const { Provider } = productContext;
 
-interface Product {
-  id: string;
-  title: string;
-  img?: string;
-}
-
-export const ProductImage = ({ img }: Pick<Product, 'img'>) => {
-  return (
-    <img
-      className={styles.productImg}
-      src={img ? img : noImage}
-      alt="Product"
-    />
-  );
-};
-
-export const ProductButtons = ({
-  counter,
-  increaseBy,
-}: ProductButtonsProps) => {
-  return (
-    <div className={styles.buttonsContainer}>
-      <button className={styles.buttonMinus} onClick={() => increaseBy(-1)}>
-        -
-      </button>
-      <div className={styles.countLabel}>{counter}</div>
-      <button className={styles.buttonAdd} onClick={() => increaseBy(1)}>
-        +
-      </button>
-    </div>
-  );
-};
-
-export const ProductTitle = ({ title }: Pick<Product, 'title'>) => {
-  return <span className={styles.productDescription}>{title}</span>;
-};
-
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ children, product }: ProductCardProps) => {
   const { counter, increaseBy } = useProduct(0);
 
   return (
-    <div className={styles.productCard}>
-      <ProductImage img={product.img} />
-      <ProductTitle title={product.title} />
-      <ProductButtons counter={counter} increaseBy={increaseBy} />
-    </div>
+    <Provider
+      value={{
+        counter,
+        increaseBy,
+        product,
+      }}
+    >
+      <div className={styles.productCard}>{children}</div>
+    </Provider>
   );
 };
+
+ProductCard.Image = ProductImage;
+ProductCard.Title = ProductTitle;
+ProductCard.Buttons = ProductButtons;
