@@ -25,12 +25,12 @@ export const ShoppingPage = () => {
       >
         <ProductCard product={product}>
           <ProductCard.Image />
-          <ProductCard.Title title="Hola mundo!" />
+          <ProductCard.Title title="Primera versión del componente" />
           <ProductCard.Buttons />
         </ProductCard>
         <ProductCard product={product}>
           <ProductImage />
-          <ProductTitle title="Hola mundo!" />
+          <ProductTitle title="Segunda versión del componente" />
           <ProductButtons />
         </ProductCard>
       </div>
