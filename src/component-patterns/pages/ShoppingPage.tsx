@@ -4,6 +4,7 @@ import {
   ProductImage,
   ProductTitle,
 } from '../components';
+import '../styles/custom-styles.css';
 
 const product = {
   id: '1',
@@ -28,9 +29,11 @@ export const ShoppingPage = () => {
           <ProductCard.Title title="Primera versión del componente" />
           <ProductCard.Buttons />
         </ProductCard>
-        <ProductCard product={product}>
-          <ProductImage />
-          <ProductTitle title="Segunda versión del componente" />
+        <ProductCard 
+          product={product}
+          className="bg-dark">
+          <ProductImage className="custom-image" />
+          <ProductTitle className="text-white" title="Segunda versión del componente" />
           <ProductButtons />
         </ProductCard>
       </div>
