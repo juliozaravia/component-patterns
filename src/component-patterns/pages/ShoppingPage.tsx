@@ -25,16 +25,16 @@ export const ShoppingPage = () => {
         }}
       >
         <ProductCard product={product}>
-          <ProductCard.Image />
-          <ProductCard.Title title="Primera versión del componente" />
-          <ProductCard.Buttons />
+          <ProductCard.Image className="custom-image" />
+          <ProductCard.Title className="text-white" title="Primera versión del componente" />
+          <ProductCard.Buttons className="custom-buttons" />
         </ProductCard>
         <ProductCard 
           product={product}
           className="bg-dark">
           <ProductImage className="custom-image" />
           <ProductTitle className="text-white" title="Segunda versión del componente" />
-          <ProductButtons />
+          <ProductButtons className="custom-buttons" />
         </ProductCard>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { ProductCardProps } from "../components/ProductCard";
+
 export interface Product {
   id: string;
   title: string;
@@ -8,4 +10,11 @@ export interface ProductContextProps {
   counter: number;
   increaseBy: (value: number) => void;
   product: Product;
+}
+
+export interface ProductCardHOCProps {
+  ({children, product}: ProductCardProps): JSX.Element,
+  Title: (Props: {title?: string, className?: string}) => JSX.Element,
+  Image: (Props: {img?: string, className?: string}) => JSX.Element,
+  Buttons: ({className}: {className?: string}) => JSX.Element
 }

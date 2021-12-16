@@ -1,12 +1,10 @@
 import { useContext } from 'react';
-
-import { Product } from '../interfaces/interfaces';
 import { productContext } from './ProductCard';
 
 import styles from '../styles/styles.module.css';
 
 interface ProductTitleProps {
-  title: string;
+  title?: string;
   className?: string;
 }
 
