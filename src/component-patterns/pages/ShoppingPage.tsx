@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   ProductButtons,
   ProductCard,
@@ -21,7 +22,36 @@ const productTwo = {
 
 const products: Product[] = [productOne, productTwo];
 
+interface ProductInCart extends Product {
+  count: number;
+}
+
 export const ShoppingPage = () => {
+  const [shoppingCart, setShoppingCart] = useState<{
+    [key: string]: ProductInCart;
+  }>({});
+
+  const onProductCountChange = ({
+    count,
+    product,
+  }: {
+    count: number;
+    product: Product;
+  }) => {
+    setShoppingCart((prevState) => {
+      if (count === 0) {
+        const { [product.id]: toDelete, ...restPrevState } = prevState;
+
+        return restPrevState;
+      }
+
+      return {
+        ...prevState,
+        [product.id]: { ...product, count },
+      };
+    });
+  };
+
   return (
     <div>
       Shopping Page!
@@ -35,7 +65,12 @@ export const ShoppingPage = () => {
       >
         {products.map((product: Product) => {
           return (
-            <ProductCard key={product.id} product={product} className="bg-dark">
+            <ProductCard
+              key={product.id}
+              product={product}
+              className="bg-dark"
+              onChange={onProductCountChange}
+            >
               <ProductImage className="custom-image" />
               <ProductTitle className="text-white" title="First product" />
               <ProductButtons className="custom-buttons" />
@@ -44,16 +79,22 @@ export const ShoppingPage = () => {
         })}
       </div>
       <div className="shopping-cart">
-        <ProductCard 
-          product={productTwo} 
-          className="bg-dark"
-          style={{
-            width: '100px'
-          }}
-        >
-          <ProductImage className="custom-image" />
-          <ProductButtons className="custom-buttons" />
-        </ProductCard>
+        {Object.entries(shoppingCart).map(([key, product]) => {
+          return (
+            <ProductCard
+              key={key}
+              product={product}
+              className="bg-dark"
+              style={{
+                width: '100px',
+              }}
+              onChange={onProductCountChange}
+            >
+              <ProductImage className="custom-image" />
+              <ProductButtons className="custom-buttons" />
+            </ProductCard>
+          );
+        })}
       </div>
     </div>
   );
