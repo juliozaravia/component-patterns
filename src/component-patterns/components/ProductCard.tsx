@@ -1,37 +1,52 @@
-import styles from '../styles/styles.module.css';
-import noImage from '../assets/no-image.jpg';
+import { createContext, CSSProperties, ReactElement } from 'react';
+
 import { useProduct } from '../hooks/useProduct';
+import {
+  OnChangeArgs,
+  Product,
+  ProductContextProps,
+} from '../interfaces/interfaces';
 
-interface Product {
-  id: string;
-  title: string;
-  img?: string;
-}
+import styles from '../styles/styles.module.css';
+import { ProductButtons, ProductImage, ProductTitle } from './';
 
-interface ProductCardProps {
+export const productContext = createContext({} as ProductContextProps);
+const { Provider } = productContext;
+
+export interface ProductCardProps {
   product: Product;
+  children?: ReactElement | ReactElement[];
+  className?: string;
+  style?: CSSProperties;
+  onChange?: (args: OnChangeArgs) => void;
+  value?: number;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
-  const { counter, increaseBy } = useProduct(0);
+export const ProductCard = ({
+  children,
+  product,
+  className,
+  style,
+  onChange,
+  value,
+}: ProductCardProps) => {
+  const { counter, increaseBy } = useProduct({ onChange, product, value });
 
   return (
-    <div className={styles.productCard}>
-      <img
-        className={styles.productImg}
-        src={product.img ? product.img : noImage}
-        alt="Taza de café!"
-      />
-      <span className={styles.productDescription}>{product.title}</span>
-      <div className={styles.buttonsContainer}>
-        <button className={styles.buttonMinus} onClick={() => increaseBy(-1)}>
-          -
-        </button>
-        <div className={styles.countLabel}>{counter}</div>
-        <button className={styles.buttonAdd} onClick={() => increaseBy(1)}>
-          +
-        </button>
+    <Provider
+      value={{
+        counter,
+        increaseBy,
+        product,
+      }}
+    >
+      <div className={`${styles.productCard} ${className}`} style={style}>
+        {children}
       </div>
-    </div>
+    </Provider>
   );
 };
+
+ProductCard.Image = ProductImage;
+ProductCard.Title = ProductTitle;
+ProductCard.Buttons = ProductButtons;
