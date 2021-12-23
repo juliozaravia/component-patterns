@@ -1,25 +1,38 @@
-import { ProductCard } from '../components/ProductCard';
+import {
+  ProductButtons,
+  ProductCard,
+  ProductImage,
+  ProductTitle,
+} from '../components';
+import { products } from '../data/products';
+import { Product } from '../interfaces/interfaces';
+import '../styles/custom-styles.css';
 
-const product = {
-  id: '1',
-  title: 'Coffee mug - Card',
-  img: './coffee-mug.png'
-};
+const product: Product = products[0];
 
 export const ShoppingPage = () => {
   return (
     <div>
-      Shopping Page!
+      <h1>Shopping Page!</h1>
       <hr />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
+      <ProductCard
+        key={product.id}
+        product={product}
+        className="bg-dark"
+        initialValues={{
+          count: 4,
+          maxCount: 10,
         }}
       >
-        <ProductCard product={product} />
-      </div>
+        {({ reset }) => (
+          <>
+            <ProductImage className="custom-image" />
+            <ProductTitle className="text-white" title="First product" />
+            <ProductButtons className="custom-buttons" />
+            <button onClick={reset}>Reset</button>
+          </>
+        )}
+      </ProductCard>
     </div>
   );
 };

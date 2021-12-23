@@ -1,37 +1,65 @@
-import styles from '../styles/styles.module.css';
-import noImage from '../assets/no-image.jpg';
+import { createContext, CSSProperties } from 'react';
+
 import { useProduct } from '../hooks/useProduct';
+import {
+  InitialValues,
+  OnChangeArgs,
+  Product,
+  ProductCardHandlers,
+  ProductContextProps,
+} from '../interfaces/interfaces';
 
-interface Product {
-  id: string;
-  title: string;
-  img?: string;
-}
+import styles from '../styles/styles.module.css';
+import { ProductButtons, ProductImage, ProductTitle } from './';
 
-interface ProductCardProps {
+export const productContext = createContext({} as ProductContextProps);
+const { Provider } = productContext;
+
+export interface ProductCardProps {
   product: Product;
+  children: (args: ProductCardHandlers) => JSX.Element;
+  className?: string;
+  style?: CSSProperties;
+  onChange?: (args: OnChangeArgs) => void;
+  value?: number;
+  initialValues?: InitialValues;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
-  const { counter, increaseBy } = useProduct(0);
+export const ProductCard = ({
+  children,
+  product,
+  className,
+  style,
+  onChange,
+  value,
+  initialValues,
+}: ProductCardProps) => {
+  const { counter, increaseBy, maxCount, isMaxCountReached, reset } =
+    useProduct({ onChange, product, value, initialValues });
 
   return (
-    <div className={styles.productCard}>
-      <img
-        className={styles.productImg}
-        src={product.img ? product.img : noImage}
-        alt="Taza de café!"
-      />
-      <span className={styles.productDescription}>{product.title}</span>
-      <div className={styles.buttonsContainer}>
-        <button className={styles.buttonMinus} onClick={() => increaseBy(-1)}>
-          -
-        </button>
-        <div className={styles.countLabel}>{counter}</div>
-        <button className={styles.buttonAdd} onClick={() => increaseBy(1)}>
-          +
-        </button>
+    <Provider
+      value={{
+        counter,
+        increaseBy,
+        product,
+        maxCount,
+      }}
+    >
+      <div className={`${styles.productCard} ${className}`} style={style}>
+        {children({
+          count: counter,
+          isMaxCountReached,
+          maxCount: initialValues?.maxCount,
+          product,
+          increaseBy,
+          reset,
+        })}
       </div>
-    </div>
+    </Provider>
   );
 };
+
+ProductCard.Image = ProductImage;
+ProductCard.Title = ProductTitle;
+ProductCard.Buttons = ProductButtons;
