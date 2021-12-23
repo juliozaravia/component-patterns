@@ -1,7 +1,7 @@
-import { ProductButtonsProps } from "../components/ProductButtons";
-import { ProductCardProps } from "../components/ProductCard";
-import { ProductImageProps } from "../components/ProductImage";
-import { ProductTitleProps } from "../components/ProductTitle";
+import { ProductButtonsProps } from '../components/ProductButtons';
+import { ProductCardProps } from '../components/ProductCard';
+import { ProductImageProps } from '../components/ProductImage';
+import { ProductTitleProps } from '../components/ProductTitle';
 
 export interface Product {
   id: string;
@@ -17,16 +17,16 @@ export interface ProductContextProps {
 }
 
 export interface ProductCardHOCProps {
-  ({children, product}: ProductCardProps): JSX.Element,
-  Title: (Props: ProductTitleProps) => JSX.Element,
-  Image: (Props: ProductImageProps) => JSX.Element,
-  Buttons: (Props: ProductButtonsProps) => JSX.Element
+  ({ children, product }: ProductCardProps): JSX.Element;
+  Title: (Props: ProductTitleProps) => JSX.Element;
+  Image: (Props: ProductImageProps) => JSX.Element;
+  Buttons: (Props: ProductButtonsProps) => JSX.Element;
 }
 
 export interface OnChangeArgs {
   product: Product;
   count: number;
-} 
+}
 
 export interface ProductInCart extends Product {
   count: number;
@@ -35,4 +35,13 @@ export interface ProductInCart extends Product {
 export interface InitialValues {
   count?: number;
   maxCount?: number;
+}
+
+export interface ProductCardHandlers {
+  count: number;
+  isMaxCountReached: boolean;
+  maxCount?: number;
+  product: Product;
+  increaseBy: (value: number) => void;
+  reset: () => void;
 }
