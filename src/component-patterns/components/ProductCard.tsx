@@ -2,6 +2,7 @@ import { createContext, CSSProperties, ReactElement } from 'react';
 
 import { useProduct } from '../hooks/useProduct';
 import {
+  InitialValues,
   OnChangeArgs,
   Product,
   ProductContextProps,
@@ -20,6 +21,7 @@ export interface ProductCardProps {
   style?: CSSProperties;
   onChange?: (args: OnChangeArgs) => void;
   value?: number;
+  initialValues?: InitialValues;
 }
 
 export const ProductCard = ({
@@ -29,8 +31,9 @@ export const ProductCard = ({
   style,
   onChange,
   value,
+  initialValues,
 }: ProductCardProps) => {
-  const { counter, increaseBy } = useProduct({ onChange, product, value });
+  const { counter, increaseBy } = useProduct({ onChange, product, value, initialValues });
 
   return (
     <Provider
