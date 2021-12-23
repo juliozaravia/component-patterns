@@ -1,9 +1,10 @@
 # Component patterns
 
-Repository created to practice and learn more about 3 different React component design patterns. Each pattern has been located in its respective branch:
+Repository created to practice and learn more about 4 different React component design patterns. Each pattern has been located in its respective branch:
 - [Compound components.](https://github.com/juliozaravia/component-patterns/tree/compound-component-pattern)
 - [Extensible styles.](https://github.com/juliozaravia/component-patterns/tree/extensible-styles-component)
 - [Control props.](https://github.com/juliozaravia/component-patterns/tree/control-props-pattern)
+- [State initializer](https://github.com/juliozaravia/component-patterns/tree/state-initializer-pattern)
 
 ## Anything else?
 
